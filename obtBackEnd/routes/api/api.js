@@ -3,7 +3,7 @@ const router = express.Router();
 
 function routerInit(db){
   
-const securityApi = require('./security');
+const securityApi = require('./security')(db);
 const thingsApi = require('./things')(db);
 
 

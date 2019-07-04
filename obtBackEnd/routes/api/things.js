@@ -40,6 +40,32 @@ router.get('/', (req, res, next)=>{
   ///res.status(200).json(thingsCollection);
 });
 
+  router.get('/page', (req, res, next) => {
+    getThings(1, 50, res);
+  });
+
+  router.get('/page/:p/:n', (req, res, next) => {
+    var page = parseInt(req.params.p);
+    var items = parseInt(req.params.n);
+    getThings(page, items, res);
+  });
+
+  function getThings(page, items, res) {
+    var query = {};
+    var options = {
+      "limit": items,
+      "skip":((page-1) * items),
+      "projection":{
+        "descripcion":1
+      }
+    };
+    thingsColl.find(query,options).toArray((err, things) => {
+      if (err) return res.status(200).json([]);
+      return res.status(200).json(things);
+    });//find toArray
+  }
+
+
 router.get('/:id', (req, res, next)=>{
   var query = {"_id": new ObjectID(req.params.id)}
   thingsColl.findOne(query, (err, doc)=>{
@@ -106,12 +132,20 @@ router.put('/:idElemento', (req, res, next) => {
 
 // router.delete('/:id/:soft', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
-  var id = parseInt(req.params.id);
+  //var id = parseInt(req.params.id);
+  var query = {"_id": new ObjectID(req.params.id)}
+  thingsColl.removeOne(query, (err, result) => {
+    if(err) {
+      console.log(err);
+      return res.status(400).json({"error":"Error al eliminar documento"});
+    }
+    return res.status(200).json(result);
+  });
   //var soft = req.params.soft;
-  thingsCollection = thingsCollection.filter( (e, i) => {
-    return (e.id !== id );
-  } ); //
-  res.status(200).json({ 'msg': 'Elemento ' + id + ' fué eleminido!!!' });
+  // thingsCollection = thingsCollection.filter( (e, i) => {
+  //   return (e.id !== id );
+  // } ); //
+  // res.status(200).json({ 'msg': 'Elemento ' + id + ' fué eleminido!!!' });
 });// put /
 
  return router;
