@@ -1,34 +1,74 @@
 const express = require('express');
+
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const jwt = require('jsonwebtoken');
+
 var router = express.Router();
 
 function initSecurity (db){
+
   var userModel =  require('./users')(db);
 
+  //configurar el passport local
+  passport.use(
+      new LocalStrategy(
+        {
+          usernameField:'email',
+          passwordField:'password'
+        },
+        (email, pswd, next)=>{
+            //--
+          if ((email ||'na') === 'na' || (pswd ||'na') == 'na') {
+            console.log("Valores de correo y contraseña no vienen");
+            return next(null, false, {"Error":"Credenciales Incorrectas"});
+          }
+          userModel.obtenerPorCorreo(email, (err, user) => {
+            if (err) {
+              console.log(err);
+              console.log("Tratando de Ingresar con cuenta inexistente " + email);
+              return next(null, false, { "Error": "Credenciales Incorrectas" });
+            }
+            //Ver si la cuenta está activa
+            if (!user.active) {
+              console.log("Tratando de Ingresar con cuenta suspendida " + email);
+              return next(null, false, { "Error": "Credenciales Incorrectas" });
+            }
+            if (!userModel.comparePasswords(pswd, user.password)) {
+              console.log("Tratando de Ingresar con contraseña incorrecta " + email);
+              return next(null, false, { "Error": "Credenciales Incorrectas" });
+            }
+            delete user.password;
+            delete user.lastPasswords;
+            delete user.active;
+            delete user.dateCreated;
+
+            return next(null, user, { "Status": "Ok" });
+          });
+            //---
+        }
+      )
+  );
+
   router.post('/login', (req, res, next)=>{
-    var email = req.body.email || 'na';
-    var pswd = req.body.password || 'na';
-    if (email === 'na' || pswd == 'na') {
-      console.log("Valores de correo y contraseña no vienen");
-      return res.status(400).json({ "Error": "Credenciales Incorrectas" });
-    }
-    userModel.obtenerPorCorreo(email, (err, user)=>{
-        if(err){
-          console.log(err);
-          console.log("Tratando de Ingresar con cuenta inexistente " + req.body.email);
-          return res.status(400).json({ Error: "Credenciales incorrectas" });
+    passport.authenticate(
+        'local',
+        {session:false},
+        (err, user, info) => {
+          if(user){
+            req.login(user, {session:false}, (err)=>{
+              if(err){
+                return res.status(400).json({"Error":"Error al iniciar sesión"});
+              }
+              const token = jwt.sign(user, 'cuandolosgatosnoestanlosratonesfiestahacen');
+              return res.status(200).json({user, token});
+            });
+          }else{
+            return res.status(400).json({info});
+          }
         }
-        //Ver si la cuenta está activa
-        if(!user.active){
-          console.log("Tratando de Ingresar con cuenta suspendida " + req.body.email);
-          return res.status(400).json({ Error: "Credenciales incorrectas" });
-        }
-        if(!userModel.comparePasswords(pswd, user.password)){
-          console.log("Tratando de Ingresar con contraseña incorrecta " + req.body.email);
-          return res.status(400).json({ Error: "Credenciales incorrectas" });
-        }
-        return res.status(200).json(user);
-    });
-  })
+    )(req, res);
+  }); //login
 
   router.post('/signin', (req, res ,next)=>{
     var email = req.body.email || 'na';
