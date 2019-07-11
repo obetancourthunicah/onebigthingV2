@@ -1,0 +1,11 @@
+.home {
+  box-sizing: border-box;
+  background-color: coral;
+  color:#000;
+  padding:1em;
+  margin:0px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
