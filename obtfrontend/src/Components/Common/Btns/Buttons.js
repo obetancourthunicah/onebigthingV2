@@ -4,7 +4,12 @@ import './Button.css';
 export default class Button extends Component{
   render(){
     return (
-      <button className="btn">Boton XYZ</button>
+      <button
+          className={["btn", this.props.customClass||""].join(" ")}
+          onClick={this.props.onClick || function(){}}
+        >
+          {this.props.caption || "Botón"}
+        </button>
     );
   }
 };
