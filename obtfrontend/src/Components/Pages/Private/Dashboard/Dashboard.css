@@ -1,0 +1,36 @@
+.cardHolder {
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 0.7px solid #3e549c;
+  padding: 1rem;
+  margin: 0.25rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 1px 1px 2px #000;
+  width: calc(50% - 0.5rem);
+  min-height: 30vh;
+}
+.big {
+  min-height: 50vh;
+  width: 100%;
+}
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  border: solid 1px #3e549c;
+  padding: 1rem;
+  color: #3e549c;
+  box-shadow: 1px 1px 7px #000;
+}
