@@ -1,0 +1,24 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #3e549c;
+  color:#fff;
+}
+
+nav a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:1rem;
+  margin:0;
+  color:#fff;
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold;
+  width:33%;
+  box-sizing: border-box;
+}

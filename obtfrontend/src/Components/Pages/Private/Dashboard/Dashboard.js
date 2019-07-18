@@ -1,20 +1,21 @@
-import React, {Component} from 'react';
+import React,  {Component} from 'react';
 import './Dashboard.css';
+import { MdAdd as Plus } from 'react-icons/md';
 
+import ThingBox from './ThingBox';
+import DatePanel from './DatePanel';
 
-const BigCard = ({...props})=>(<div className="card big">{props.children}</div>);
-const SmallCard = ({ ...props }) => (<div className="card">{props.children}</div>);
-const CircleNumber = ({ ...props }) => (<div className="circle">{props.children}</div>);
-export default class Dashboard extends Component {
+export default class Dashboard extends Component{
 
   render(){
-    return (
+    return(
       <section>
-        <h1>One Big Thing DashBoard</h1>
-        <section className="main cardHolder fix640" >
-          <BigCard><CircleNumber>1</CircleNumber></BigCard>
-          <SmallCard><CircleNumber>2</CircleNumber></SmallCard>
-          <SmallCard><CircleNumber>3</CircleNumber></SmallCard>
+        <h1>One Big Thing Dashboard</h1>
+        <section className="main cardHolder fix640">
+          <ThingBox thingType="big"><span className="circle"><Plus/></span></ThingBox>
+          <DatePanel />
+          <ThingBox><span className="circle"><Plus/></span></ThingBox>
+          <ThingBox><span className="circle"><Plus/></span></ThingBox>
         </section>
       </section>
     );

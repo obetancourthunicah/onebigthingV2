@@ -16,9 +16,18 @@
   min-height: 30vh;
 }
 .big {
-  min-height: 50vh;
+  min-height: calc(50vh - 3rem);
   width: 100%;
 }
+.datePanel {
+  box-sizing: border-box;
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+  align-items: center;
+  padding:1rem 0.25rem;
+}
+
 .circle {
   display: flex;
   justify-content: center;
