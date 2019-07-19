@@ -2,6 +2,8 @@
 // ES5 var React = require('react');
 // var Component = React.Component;
 import React, { Component } from 'react';
+import { naxios } from '../../../../Utilities';
+
 import Button from '../../../Common/Btns/Buttons';
 import Campo from '../../../Common/Campo/Campo';
 /*
@@ -27,9 +29,18 @@ export default class Login extends Component{
   }
   onSiginBtnClick(e){
     console.log(this.state);
+    naxios.post('/api/security/login', this.state)
+      .then( ( {data , status})=>{
+        console.log(data)
+        this.props.setAuth(data.token, data.user);
+        }
+      )
+      .catch( (err)=> {console.log(err)})
+    ;
   }
 
   render(){
+    console.log(this.props.auth);
     return (
       <section>
         <h1>Iniciar Sesión</h1>
