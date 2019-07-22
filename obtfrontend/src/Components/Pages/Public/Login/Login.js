@@ -2,6 +2,7 @@
 // ES5 var React = require('react');
 // var Component = React.Component;
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { naxios } from '../../../../Utilities';
 
 import Button from '../../../Common/Btns/Buttons';
@@ -16,9 +17,11 @@ export default class Login extends Component{
     this.state = {
       email:'',
       password:'',
+      redirect:false,
+      error:null
     };
     //Para el autobinding
-   this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSiginBtnClick = this.onSiginBtnClick.bind(this);
   }
 
@@ -31,16 +34,27 @@ export default class Login extends Component{
     console.log(this.state);
     naxios.post('/api/security/login', this.state)
       .then( ( {data , status})=>{
-        console.log(data)
         this.props.setAuth(data.token, data.user);
+        this.setState({redirect:true});
         }
       )
-      .catch( (err)=> {console.log(err)})
+      .catch( (err)=> {
+          console.log(err)
+          this.setState({"error":"Correo o contraseña incorrectas. Intente de Nuevo"})
+        }
+      )
     ;
   }
 
   render(){
-    console.log(this.props.auth);
+    console.log(this.props);
+    if(this.state.redirect){
+      return (
+        <Redirect
+          to={(this.props.location.state) ? this.props.location.state.from.pathname : '/'}
+        />
+      );
+    }
     return (
       <section>
         <h1>Iniciar Sesión</h1>
@@ -58,6 +72,7 @@ export default class Login extends Component{
             name="password"
             onChange={this.onChangeHandler}
           />
+          { (this.state.error && true)? (<div className="error">{this.state.error}</div>):null}
           <section className="action">
               <Button
                 caption="Iniciar Sesión"
@@ -67,6 +82,7 @@ export default class Login extends Component{
               <Button
                 caption="Crear Nueva Cuenta"
                 customClass="link"
+                onClick={(e)=>{this.props.history.push('/signin')}}
               />
           </section>
         </section>

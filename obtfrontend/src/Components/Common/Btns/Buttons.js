@@ -8,7 +8,7 @@ export default class Button extends Component{
           className={["btn", this.props.customClass||""].join(" ")}
           onClick={this.props.onClick || function(){}}
         >
-          {this.props.caption || "Botón"}
+          {this.props.caption|| this.props.children || "Botón"}
         </button>
     );
   }

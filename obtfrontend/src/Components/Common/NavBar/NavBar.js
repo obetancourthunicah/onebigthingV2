@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // https://react-icons.netlify.com/
-import { IoIosLogIn, IoIosHome, IoIosKey } from 'react-icons/io';
+import { IoIosLogIn, IoIosHome, IoIosKey, IoIosToday, IoIosList } from 'react-icons/io';
 import './NavBar.css';
 
 const NavItem = ({ to, children, ...rest }) => {
@@ -10,12 +10,22 @@ const NavItem = ({ to, children, ...rest }) => {
   );
 };
 
-export default ()=>{
-  return(
-    <nav>
-      <NavItem to="/"><IoIosLogIn/>&nbsp;Login</NavItem>
-      <NavItem to="/sigin"><IoIosKey/>&nbsp;SignIn</NavItem>
-      <NavItem to="/main"><IoIosHome/>&nbsp;Main</NavItem>
-    </nav>
-  )
+export default ({auth, unSetAuth})=>{
+  console.log(auth);
+  if(!auth.logged){
+    return(
+      <nav>
+        <NavItem to="/login"><IoIosLogIn/>&nbsp;Login</NavItem>
+        <NavItem to="/signin"><IoIosKey/>&nbsp;SignIn</NavItem>
+      </nav>
+    )
+  } else {
+    return (
+      <nav>
+        <NavItem to="/"><IoIosHome/>&nbsp;Home</NavItem>
+        <NavItem to="/main"><IoIosToday />&nbsp;Main</NavItem>
+        <NavItem to="/backlog"><IoIosList/>&nbsp;BackLog</NavItem>
+      </nav>
+    )
+  }
 }

@@ -16,7 +16,7 @@
   min-height: 30vh;
 }
 .big {
-  min-height: calc(50vh - 3rem);
+  min-height: calc(50vh - 7rem);
   width: 100%;
 }
 .datePanel {
@@ -26,6 +26,7 @@
   justify-content: space-between;
   align-items: center;
   padding:1rem 0.25rem;
+  font-weight: bold;
 }
 
 .circle {
