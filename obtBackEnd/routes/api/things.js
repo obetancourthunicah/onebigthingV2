@@ -45,7 +45,8 @@ router.get('/', (req, res, next)=>{
       "skip":((page-1) * items),
       "projection":{
         "descripcion":1
-      }
+      },
+      "sort": [["fecha",-1]]
     };
     let a = thingsColl.find(query,options)
     let totalThings = await a.count();
