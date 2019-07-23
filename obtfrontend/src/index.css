@@ -36,6 +36,7 @@ h1 {
   color: #fff;
   box-shadow: 0px 1px 3px #000;
   margin-bottom: 1rem;
+  align-items: center;
 }
 
 .error {
