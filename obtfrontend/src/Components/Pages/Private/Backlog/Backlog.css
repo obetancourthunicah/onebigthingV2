@@ -13,9 +13,15 @@
   align-items: center;
   justify-content: space-between;
 }
-.thingItem span{
-  padding-right:1.5rem;
+.thingItem span:first-child {
+  padding-right: 1.5rem;
 }
-.center{
+.center {
   justify-content: center;
+}
+.addThing a {
+  color: #fff;
+}
+.updateThing a {
+  color: #3e549c;
 }

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // https://react-icons.netlify.com/
 import { IoIosLogIn, IoIosHome, IoIosKey, IoIosToday, IoIosList } from 'react-icons/io';
 import './NavBar.css';
 
 const NavItem = ({ to, children, ...rest }) => {
   return (
-    <Link to={to}>{children}</Link>
+    <NavLink activeClassName="activeNav" exact to={to}>{children}</NavLink>
   );
 };
 

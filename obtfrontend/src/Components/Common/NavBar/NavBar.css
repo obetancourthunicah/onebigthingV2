@@ -6,18 +6,21 @@ nav {
   margin: 0;
   box-sizing: border-box;
   background-color: #3e549c;
-  color:#fff;
+  color: #fff;
 }
-
-nav a{
+nav a {
   box-sizing: border-box;
-  padding:1rem;
-  margin:0;
-  color:#fff;
+  padding: 1rem;
+  margin: 0;
+  color: #fff;
   text-decoration: none;
   text-align: center;
   font-weight: bold;
   box-sizing: border-box;
   max-width: 50%;
-  width:50%;
+  width: 50%;
+}
+.activeNav {
+  background-color: #fff;
+  color: #3e549c;
 }

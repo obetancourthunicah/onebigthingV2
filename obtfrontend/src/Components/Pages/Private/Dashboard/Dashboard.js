@@ -12,14 +12,14 @@ export default class Dashboard extends Component{
     super();
   }
   componentDidMount(){
-    paxios.get('/api/things/')
-      .then( ({data, status})=>{
-        console.log(data);
-      })
-      .catch((err)=>{
-        console.log(err);
-      })
-    ;
+    // paxios.get('/api/things/')
+    //   .then( ({data, status})=>{
+    //     console.log(data);
+    //   })
+    //   .catch((err)=>{
+    //     console.log(err);
+    //   })
+    // ;
   }
   render(){
     return(
