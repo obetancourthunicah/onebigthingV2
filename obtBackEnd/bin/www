@@ -4,10 +4,12 @@
  * Module dependencies.
  */
 var MongoClient = require('mongodb').MongoClient;
-var MongoUri = 'mongodb://localhost:27017';
+var MongoUriPrd = "mongodb+srv://sw2019user:wm7kqyvQ8InSrM1e@cojba-nzup0.mongodb.net/test?retryWrites=true&w=majority";
+var MongoUriDev = 'mongodb://localhost:27017';
+var MongoUri = (process.env.production) ? MongoUriPrd : MongoUriDev;
 var MongoDb = 'sw201902';
 var MongoOption = { useNewUrlParser: true };
-
+console.log(MongoUri);
 MongoClient.connect(MongoUri, MongoOption, (err, conn) => {
     if (err) {
         console.log(err);
