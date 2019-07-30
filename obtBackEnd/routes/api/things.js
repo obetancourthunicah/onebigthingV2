@@ -14,7 +14,9 @@ var thingsCollection = [];
 var thingsStruct = {
   "descripcion":'',
   "fecha": 0,
-  "by":{}
+  "by":{},
+  "dd":'NA',
+  "type":""
 };
 
 
@@ -38,13 +40,24 @@ router.get('/', (req, res, next)=>{
     getThings(page, items, res , by);
   });
 
-  async function getThings(page, items, res, by) {
+  router.get('/page/:p/:n/:dd', (req, res, next) => {
+    var by = { "by._id": new ObjectID(req.user._id) };
+    var page = parseInt(req.params.p);
+    var items = parseInt(req.params.n);
+    var dd = req.params.dd;
+    getThings(page, items, res, by, dd);
+  });
+
+  async function getThings(page, items, res, by, dd) {
     var query = by;
+    if(!!dd){
+      by.dd = dd;
+    }
     var options = {
       "limit": items,
       "skip":((page-1) * items),
       "projection":{
-        "descripcion":1
+        "descripcion":1,"type":1,"visited":1
       },
       "sort": [["fecha",-1]]
     };

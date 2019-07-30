@@ -31,7 +31,7 @@ export default class DetailAdd extends Component {
     const { descripcion } = this.state;
     paxios.post('/api/things', { descripcion })
       .then(({ data }) => {
-        this.props.history.push("/backlog");
+        this.props.history.goBack();
       })
       .catch((error) => {
         console.log(error);
@@ -61,7 +61,7 @@ export default class DetailAdd extends Component {
             <Button
               caption="Cancelar"
               customClass="secondary"
-              onClick={(e) => { this.props.history.push('/backlog') }}
+              onClick={(e) => { this.props.history.goBack() }}
             />
           </section>
         </section>
