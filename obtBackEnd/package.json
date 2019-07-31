@@ -2,6 +2,10 @@
   "name": "obtbackend",
   "version": "0.0.0",
   "private": true,
+  "main": "bin/www",
+  "engines":{
+    "node":"10.x"
+  },
   "scripts": {
     "start": "node ./bin/www"
   },
